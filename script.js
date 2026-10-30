@@ -4,18 +4,22 @@ const whatsappBase = `https://wa.me/${whatsappNumber}`;
 // Image-only style references use temporary labels until product names and prices are confirmed.
 // Category tags reflect the visible presentation; availability and collection membership still need confirmation.
 const products = [
-  { name: "Watch Style 01", price: null, image: "dress%26co%20img/6.jpg", description: "Green wristwatch with an open-style dial.", categories: [] },
+  { name: "Watch Style 01", price: null, image: "dress%26co%20img/6.jpg", description: "Green wristwatch with an open-style dial.", categories: ["Men"] },
   { name: "Watch Style 02", price: null, image: "dress%26co%20img/8.jpg", description: "Black wristwatch shown with coordinating accessories.", categories: ["Men", "Luxury"] },
-  { name: "Watch Style 03", price: null, image: "dress%26co%20img/10.jpg", description: "Silver-tone wristwatch with a turquoise dial.", categories: [] },
-  { name: "Watch Style 04", price: null, image: "dress%26co%20img/7.jpg", description: "Rose-gold-tone wristwatch with a dark strap, shown in a display box.", categories: ["Women", "Luxury"] },
-  { name: "Watch Style 05", price: null, image: "dress%26co%20img/14.jpg", description: "Silver-tone wristwatch with a light dial.", categories: ["Women", "Luxury"] },
+  { name: "Watch Style 03", price: null, image: "dress%26co%20img/women%20watch%207.jpg", description: "Silver-tone wristwatch with a turquoise dial, shown with matching bracelets.", categories: ["Women"] },
+  { name: "Watch Style 04", price: null, image: "dress%26co%20img/women%20watch%205.jpg", description: "Rose-gold-tone wristwatch with a pink strap and light dial.", categories: ["Women", "Luxury"] },
+  { name: "Watch Style 05", price: null, image: "dress%26co%20img/women%20watch%204.jpg", description: "Gold-tone wristwatch with a light dial and linked bracelet.", categories: ["Women", "Luxury"] },
   { name: "Watch Style 06", price: null, image: "dress%26co%20img/13.jpg", description: "Close-up of a dark-dial wristwatch with a two-tone bracelet.", categories: ["Luxury"] },
-  { name: "Watch Style 07", price: null, image: "dress%26co%20img/15.jpg", description: "Two-tone wristwatch with a light dial shown in a presentation.", categories: ["Women", "Luxury"] },
+  { name: "Watch Style 07", price: null, image: "dress%26co%20img/women%20watch%203.jpg", description: "Gold-tone wristwatch with a light dial, shown on the wrist.", categories: ["Women", "Luxury"] },
   { name: "Watch Style 08", price: null, image: "dress%26co%20img/16.jpg", description: "Silver-tone wristwatch with a dark dial and strap.", categories: ["Men"] },
   { name: "Watch Style 09", price: null, image: "dress%26co%20img/17.jpg", description: "Silver-tone wristwatch with a light dial and dark strap.", categories: ["Men"] },
   { name: "Watch Style 10", price: null, image: "dress%26co%20img/22.jpg", description: "Dark-strap wristwatch with a rose-gold-tone case.", categories: ["Luxury"] },
   { name: "Watch Style 11", price: null, image: "dress%26co%20img/wrist%20watch.jpg", description: "Two-tone wristwatch displayed on a stand.", categories: ["Luxury"] },
-  { name: "Watch Style 12", price: null, image: "dress%26co%20img/wrist%20watch2.jpg", description: "Gold-tone wristwatch shown on the wrist.", categories: [] },
+  { name: "Watch Style 12", price: null, image: "dress%26co%20img/14.jpg", description: "Silver-tone wristwatch with a light dial.", categories: [] },
+  { name: "Couples Watch Set 01", price: null, image: "dress%26co%20img/luxury%201.jpg", description: "Matching pair of gold-tone watches with dark dials.", categories: ["Luxury", "Couples"] },
+  { name: "Twins Watch Set 01", price: null, image: "dress%26co%20img/luxury2.jpg", description: "Matching pair of dark-dial wristwatches with blue straps.", categories: ["Luxury", "Twins"] },
+  { name: "Couples Watch Set 02", price: null, image: "dress%26co%20img/luxury3.jpg", description: "Matching pair of gold and silver-tone watches with light dials.", categories: ["Luxury", "Couples"] },
+  { name: "Twins Watch Set 02", price: null, image: "dress%26co%20img/luxury4.jpg", description: "Matching pair of gold and silver-tone watches with light dials.", categories: ["Luxury", "Twins"] },
 ];
 
 const menuButton = document.querySelector(".menu-toggle");
@@ -42,6 +46,7 @@ const categoryNavRoutes = [
   ["Men's Watches", "men"],
   ["Women's Watches", "women"],
   ["Luxury Collection", "luxury"],
+  ["Couples & Twins", "couples"],
 ];
 
 function normalizePath(path) {
@@ -224,10 +229,12 @@ if (heroSlideshow) {
 const searchInput = document.querySelector("#style-search");
 const filterButtons = [...document.querySelectorAll(".filter-chip")];
 const collectionResults = document.querySelector("#collection-results");
+const couplesTwinsResults = document.querySelector("#couples-twins-results");
 let selectedFilter = "all";
 
 function filterKey(value) {
   const text = String(value).toLowerCase();
+  if (text.includes("couple") || text.includes("twin")) return "couples";
   if (text.includes("women")) return "women";
   if (text.includes("men")) return "men";
   if (text.includes("luxury")) return "luxury";
@@ -235,7 +242,7 @@ function filterKey(value) {
 }
 
 const requestedCategory = new URLSearchParams(window.location.search).get("category");
-const categoryKeys = new Set(["all", ...categoryNavRoutes.map(([, key]) => key)]);
+const categoryKeys = new Set(["all", "couples", ...categoryNavRoutes.map(([, key]) => key)]);
 selectedFilter = categoryKeys.has(requestedCategory) ? requestedCategory : "all";
 
 function updateCategorySelection(updateHistory = false) {
@@ -290,8 +297,26 @@ function matchesFilter(product) {
     case "men": return categories.includes("men");
     case "women": return categories.includes("women");
     case "luxury": return categories.includes("luxury");
+    case "couples": return categories.includes("couples") || categories.includes("twins");
     default: return true;
   }
+}
+
+function renderProductCard(product) {
+  const productName = escapeHTML(product.name);
+  const productDescription = escapeHTML(product.description || "");
+  const productImage = escapeHTML(product.image);
+  const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 });
+  const price = Number.isFinite(product.price) ? naira.format(product.price) : null;
+  const messageText = `Hello DREESO & CO, I'm interested in ${product.name}${price ? ` priced at ${price}` : ""}. Please confirm its current price and availability.`;
+  const message = encodeURIComponent(messageText);
+  const tags = (product.categories || []).map((category) => `<span>${escapeHTML(category)}</span>`).join("");
+  return `<article class="product-card">
+    <div class="product-image"><img src="${productImage}" alt="${productDescription}" loading="lazy"></div>
+    <div class="product-info"><div class="product-meta">${tags}</div>
+    <h3>${productName}</h3><p>${productDescription}</p><strong class="product-price">${price || "Price on enquiry"}</strong>
+    <a class="button button-orange" href="${whatsappBase}?text=${message}" target="_blank" rel="noopener">Enquire on WhatsApp <span aria-hidden="true">&#8599;</span></a></div>
+  </article>`;
 }
 
 function renderProducts() {
@@ -311,27 +336,21 @@ function renderProducts() {
       <div class="empty-collection">
         <h3>${message}</h3>
         <p>Style photos are shown for enquiry. Ask us to confirm current availability, details and price.</p>
-        <a class="button button-orange" href="${whatsappBase}?text=${encodeURIComponent("Hello DREESO & CO, please share your available watches and current prices.")}" target="_blank" rel="noopener">Ask about the collection <span aria-hidden="true">â†—</span></a>
+        <a class="button button-orange" href="${whatsappBase}?text=${encodeURIComponent("Hello DREESO & CO, please share your available watches and current prices.")}" target="_blank" rel="noopener">Ask about the collection <span aria-hidden="true">&#8599;</span></a>
       </div>`;
     return;
   }
 
-  const naira = new Intl.NumberFormat("en-NG", { style: "currency", currency: "NGN", maximumFractionDigits: 0 });
-  collectionResults.innerHTML = `<div class="product-grid">${visibleProducts.map((product) => {
-    const productName = escapeHTML(product.name);
-    const productDescription = escapeHTML(product.description || "");
-    const productImage = escapeHTML(product.image);
-    const price = Number.isFinite(product.price) ? naira.format(product.price) : null;
-    const messageText = `Hello DREESO & CO, I'm interested in ${product.name}${price ? ` priced at ${price}` : ""}. Please confirm its current price and availability.`;
-    const message = encodeURIComponent(messageText);
-    const tags = (product.categories || []).map((category) => `<span>${escapeHTML(category)}</span>`).join("");
-    return `<article class="product-card">
-      <div class="product-image"><img src="${productImage}" alt="${product.description}" loading="lazy"></div>
-      <div class="product-info"><div class="product-meta">${tags}</div>
-      <h3>${productName}</h3><p>${productDescription}</p><strong class="product-price">${price || "Price on enquiry"}</strong>
-      <a class="button button-orange" href="${whatsappBase}?text=${message}" target="_blank" rel="noopener">Enquire on WhatsApp <span aria-hidden="true">â†—</span></a></div>
-    </article>`;
-  }).join("")}</div>`;
+  const couplesGridClass = selectedFilter === "couples" ? " couples-twins-grid" : "";
+  collectionResults.innerHTML = `<div class="product-grid${couplesGridClass}">${visibleProducts.map(renderProductCard).join("")}</div>`;
+}
+
+if (couplesTwinsResults) {
+  const couplesAndTwins = products.filter((product) => {
+    const categories = (product.categories || []).map((category) => category.toLowerCase());
+    return categories.includes("couples") || categories.includes("twins");
+  });
+  couplesTwinsResults.innerHTML = `<div class="product-grid couples-twins-grid">${couplesAndTwins.map(renderProductCard).join("")}</div>`;
 }
 
 if (collectionResults) {

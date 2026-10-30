@@ -4,13 +4,13 @@ A responsive, framework-free DREESO & CO website for luxury wristwatches and pre
 
 ## Pages
 
-- `index.html` â€” home, owner-supplied watch photo showcase
-- `shop.html` â€” shop enquiries and discovery controls
-- `collections.html` â€” watch categories
-- `about.html` â€” brand overview and supplied business card
-- `contact.html` â€” business card, verified contact details and social links
-- `delivery.html` â€” delivery and returns information
-- `warranty.html` â€” warranty information
+- `index.html` &mdash; home, owner-supplied watch photo showcase
+- `shop.html` &mdash; shop enquiries and discovery controls
+- `collections.html` &mdash; watch categories
+- `about.html` &mdash; brand overview and supplied business card
+- `contact.html` &mdash; business card, verified contact details and social links
+- `delivery.html` &mdash; delivery and returns information
+- `warranty.html` &mdash; warranty information
 
 Open `index.html` in a browser to run locally. Poppins is loaded from Google Fonts; the supplied watch photos are local assets under `dress&co img/`. The slideshow uses those same files, so no duplicate image set is required.
 
