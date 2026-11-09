@@ -16,7 +16,7 @@ Open `index.html` in a browser to run locally. Poppins is loaded from Google Fon
 
 ## Catalogue status
 
-The shop displays distinct owner-supplied watch photos as temporary `Watch Style` enquiry cards because confirmed product names, prices and availability were not supplied. Its category controls are All Styles, Men, Women and Luxury; search works together with category filtering. Collection links open the shop with the selected category applied. Update temporary labels, prices and collection membership when the owner confirms the catalogue. The owner-supplied watch and brand images are stored in `dress&co img/`. Fabric photographs have not been supplied yet, so the homepage invites customers to ask about fabric options directly.
+The shop displays distinct owner-supplied watch photos as temporary `Watch Style` enquiry cards because confirmed product names, brands, prices and availability were not supplied. Its live search matches the current style labels, descriptions and category terms, and works together with All Styles, Men, Women, Luxury and Couples & Twins filters. Collection links open the shop with the selected category applied. Add confirmed product names and brand/model details to the product data before relying on searches for those names; do not infer them from photos. Update temporary labels, prices and collection membership when the owner confirms the catalogue. The owner-supplied watch and brand images are stored in `dress&co img/`. The homepage also features seven named premium fabrics with local photographs in `images/fabrics/`; each card opens a WhatsApp enquiry for that fabric. The fabric photos were copied from the local `Adejare-Clothing-Website/Adejare-Clothing/images/fabrics/` folder because neither of the located Nerdylad project folders contained these image files or matching image data.
 
 The homepage photo showcase is for style discovery and links each image to a WhatsApp enquiry. Photos with visible promotional text or duplicate content were omitted from that showcase.
 
@@ -31,4 +31,3 @@ The site uses the official brand details and business card:
 - Showroom locations: Ibadan, Oyo State; Malete, Kwara State; Adeniji Adele, Lagos Island
 
 The card notes nationwide delivery. Current delivery timing and charges, return terms and warranty coverage are confirmed directly with the business.
-

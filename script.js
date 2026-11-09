@@ -24,12 +24,14 @@ const products = [
 
 const menuButton = document.querySelector(".menu-toggle");
 const navigation = document.querySelector(".primary-nav");
+const menuIcon = menuButton?.querySelector("use");
 
 if (menuButton && navigation) {
   menuButton.addEventListener("click", () => {
     const isOpen = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!isOpen));
     menuButton.setAttribute("aria-label", isOpen ? "Open menu" : "Close menu");
+    menuIcon?.setAttribute("href", `images/social-icons.svg#${isOpen ? "menu" : "close"}`);
     navigation.classList.toggle("open", !isOpen);
   });
 
@@ -37,6 +39,7 @@ if (menuButton && navigation) {
     if (!event.target.closest("a")) return;
     menuButton.setAttribute("aria-expanded", "false");
     menuButton.setAttribute("aria-label", "Open menu");
+    menuIcon?.setAttribute("href", "images/social-icons.svg#menu");
     navigation.classList.remove("open");
   });
 }
@@ -302,6 +305,46 @@ function matchesFilter(product) {
   }
 }
 
+function normalizeSearchText(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function matchesSearch(product, query) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return true;
+
+  const categoryTerms = (product.categories || []).flatMap((category) => {
+    switch (category.toLowerCase()) {
+      case "men": return ["men", "mens", "man", "male", "gentleman", "gentlemen", "men watches", "mens watches"];
+      case "women": return ["women", "womens", "woman", "female", "women watches", "womens watches"];
+      case "luxury": return ["luxury", "luxurious", "premium", "high end", "luxury watches"];
+      case "couples": return ["couple", "couples", "twin", "twins", "matching", "pairs", "sets"];
+      case "twins": return ["couple", "couples", "twin", "twins", "matching", "pairs", "sets"];
+      default: return [category];
+    }
+  });
+  const searchableText = normalizeSearchText([
+    product.name,
+    product.brand,
+    product.model,
+    product.description,
+    "watch watches wristwatch wristwatches timepiece timepieces",
+    ...(product.categories || []),
+    ...categoryTerms,
+  ].filter(Boolean).join(" "));
+  const compactQuery = normalizedQuery.replace(/\s/g, "");
+  const compactText = searchableText.replace(/\s/g, "");
+  const queryTerms = normalizedQuery.split(" ");
+
+  return compactText.includes(compactQuery)
+    || (queryTerms.length > 1 && queryTerms.every((term) => searchableText.includes(term)));
+}
+
 function renderProductCard(product) {
   const productName = escapeHTML(product.name);
   const productDescription = escapeHTML(product.description || "");
@@ -310,34 +353,45 @@ function renderProductCard(product) {
   const price = Number.isFinite(product.price) ? naira.format(product.price) : null;
   const messageText = `Hello DREESO & CO, I'm interested in ${product.name}${price ? ` priced at ${price}` : ""}. Please confirm its current price and availability.`;
   const message = encodeURIComponent(messageText);
-  const tags = (product.categories || []).map((category) => `<span>${escapeHTML(category)}</span>`).join("");
+  const categories = product.categories || [];
+  const tags = categories.length
+    ? categories.map((category) => `<span>${escapeHTML(category)}</span>`).join("")
+    : "<span>Category to confirm</span>";
   return `<article class="product-card">
     <div class="product-image"><img src="${productImage}" alt="${productDescription}" loading="lazy"></div>
     <div class="product-info"><div class="product-meta">${tags}</div>
     <h3>${productName}</h3><p>${productDescription}</p><strong class="product-price">${price || "Price on enquiry"}</strong>
-    <a class="button button-orange" href="${whatsappBase}?text=${message}" target="_blank" rel="noopener">Enquire on WhatsApp <span aria-hidden="true">&#8599;</span></a></div>
+    <a class="button button-orange" href="${whatsappBase}?text=${message}" target="_blank" rel="noopener">Enquire on WhatsApp <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="images/social-icons.svg#message"></use></svg></a></div>
   </article>`;
 }
 
 function renderProducts() {
   if (!collectionResults) return;
 
-  const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+  const query = searchInput ? searchInput.value : "";
+  const searchClearButton = document.querySelector(".search-clear");
+  if (searchClearButton) searchClearButton.hidden = !query;
+  const couplesSection = couplesTwinsResults?.closest(".couples-twins-section");
+  if (couplesSection) couplesSection.hidden = Boolean(query.trim()) || selectedFilter !== "all";
   const visibleProducts = products.filter((product) => {
-    const searchableText = `${product.name} ${product.description || ""} ${(product.categories || []).join(" ")}`.toLowerCase();
-    return matchesFilter(product) && (!query || searchableText.includes(query));
+    return matchesFilter(product) && matchesSearch(product, query);
   });
   const collectionCount = document.querySelector("#collection-count");
   if (collectionCount) collectionCount.textContent = `Showing ${visibleProducts.length} ${visibleProducts.length === 1 ? "style" : "styles"}`;
 
   if (visibleProducts.length === 0) {
-    const message = "No watches found. Try another search or explore a different collection.";
     collectionResults.innerHTML = `
       <div class="empty-collection">
-        <h3>${message}</h3>
-        <p>Style photos are shown for enquiry. Ask us to confirm current availability, details and price.</p>
-        <a class="button button-orange" href="${whatsappBase}?text=${encodeURIComponent("Hello DREESO & CO, please share your available watches and current prices.")}" target="_blank" rel="noopener">Ask about the collection <span aria-hidden="true">&#8599;</span></a>
+        <h3>No watches found matching your search. Try another name or keyword.</h3>
+        <button class="button button-orange clear-search-results" type="button">Clear search</button>
       </div>`;
+    collectionResults.querySelector(".clear-search-results").addEventListener("click", () => {
+      if (searchInput) {
+        searchInput.value = "";
+        searchInput.focus();
+      }
+      renderProducts();
+    });
     return;
   }
 
@@ -363,6 +417,11 @@ if (collectionResults) {
   });
 
   if (searchInput) searchInput.addEventListener("input", renderProducts);
+  document.querySelector(".search-clear")?.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+    renderProducts();
+  });
 
   document.querySelectorAll(".category-card[data-category]").forEach((card) => {
     card.addEventListener("click", () => {
