@@ -5,21 +5,29 @@ const whatsappBase = `https://wa.me/${whatsappNumber}`;
 // Category tags reflect the visible presentation; availability and collection membership still need confirmation.
 const products = [
   { name: "Watch Style 01", price: null, image: "dress%26co%20img/6.jpg", description: "Green wristwatch with an open-style dial.", categories: ["Men"] },
-  { name: "Watch Style 02", price: null, image: "dress%26co%20img/8.jpg", description: "Black wristwatch shown with coordinating accessories.", categories: ["Men", "Luxury"] },
+  { name: "Watch Style 02", price: null, image: "dress%26co%20img/8.jpg", description: "Black wristwatch shown with coordinating accessories.", categories: ["Men"] },
   { name: "Watch Style 03", price: null, image: "dress%26co%20img/women%20watch%207.jpg", description: "Silver-tone wristwatch with a turquoise dial, shown with matching bracelets.", categories: ["Women"] },
-  { name: "Watch Style 04", price: null, image: "dress%26co%20img/women%20watch%205.jpg", description: "Rose-gold-tone wristwatch with a pink strap and light dial.", categories: ["Women", "Luxury"] },
-  { name: "Watch Style 05", price: null, image: "dress%26co%20img/women%20watch%204.jpg", description: "Gold-tone wristwatch with a light dial and linked bracelet.", categories: ["Women", "Luxury"] },
-  { name: "Watch Style 06", price: null, image: "dress%26co%20img/13.jpg", description: "Close-up of a dark-dial wristwatch with a two-tone bracelet.", categories: ["Luxury"] },
-  { name: "Watch Style 07", price: null, image: "dress%26co%20img/women%20watch%203.jpg", description: "Gold-tone wristwatch with a light dial, shown on the wrist.", categories: ["Women", "Luxury"] },
+  { name: "Watch Style 04", price: null, image: "dress%26co%20img/women%20watch%205.jpg", description: "Rose-gold-tone wristwatch with a pink strap and light dial.", categories: ["Women"] },
+  { name: "Watch Style 05", price: null, image: "dress%26co%20img/women%20watch%204.jpg", description: "Gold-tone wristwatch with a light dial and linked bracelet.", categories: ["Women"] },
+  { name: "Watch Style 06", price: null, image: "dress%26co%20img/13.jpg", description: "Close-up of a dark-dial wristwatch with a two-tone bracelet.", categories: ["Men"] },
+  { name: "Watch Style 07", price: null, image: "dress%26co%20img/women%20watch%203.jpg", description: "Gold-tone wristwatch with a light dial, shown on the wrist.", categories: ["Women"] },
   { name: "Watch Style 08", price: null, image: "dress%26co%20img/16.jpg", description: "Silver-tone wristwatch with a dark dial and strap.", categories: ["Men"] },
   { name: "Watch Style 09", price: null, image: "dress%26co%20img/17.jpg", description: "Silver-tone wristwatch with a light dial and dark strap.", categories: ["Men"] },
-  { name: "Watch Style 10", price: null, image: "dress%26co%20img/22.jpg", description: "Dark-strap wristwatch with a rose-gold-tone case.", categories: ["Luxury"] },
-  { name: "Watch Style 11", price: null, image: "dress%26co%20img/wrist%20watch.jpg", description: "Two-tone wristwatch displayed on a stand.", categories: ["Luxury"] },
+  { name: "Watch Style 10", price: null, image: "dress%26co%20img/22.jpg", description: "Dark-strap wristwatch with a rose-gold-tone case.", categories: ["Men"] },
+  { name: "Luxury Watch 01", price: null, image: "dress%26co%20img/luxury%20watches/7.jpg", description: "Rose-gold-tone wristwatch with a dark strap and detailed dial.", categories: ["Luxury"] },
   { name: "Watch Style 12", price: null, image: "dress%26co%20img/14.jpg", description: "Silver-tone wristwatch with a light dial.", categories: [] },
-  { name: "Couples Watch Set 01", price: null, image: "dress%26co%20img/luxury%201.jpg", description: "Matching pair of gold-tone watches with dark dials.", categories: ["Luxury", "Couples"] },
-  { name: "Twins Watch Set 01", price: null, image: "dress%26co%20img/luxury2.jpg", description: "Matching pair of dark-dial wristwatches with blue straps.", categories: ["Luxury", "Twins"] },
-  { name: "Couples Watch Set 02", price: null, image: "dress%26co%20img/luxury3.jpg", description: "Matching pair of gold and silver-tone watches with light dials.", categories: ["Luxury", "Couples"] },
-  { name: "Twins Watch Set 02", price: null, image: "dress%26co%20img/luxury4.jpg", description: "Matching pair of gold and silver-tone watches with light dials.", categories: ["Luxury", "Twins"] },
+  { name: "Watch Style 13", price: null, image: "dress%26co%20img/15.jpg", description: "Two-tone silver-and-gold wristwatch with a light dial and linked bracelet.", categories: [] },
+  { name: "Luxury Watch 02", price: null, image: "dress%26co%20img/luxury%20watches/18.jpg", description: "Assorted skeleton-dial watches displayed together.", categories: ["Luxury"] },
+  { name: "Luxury Watch 03", price: null, image: "dress%26co%20img/luxury%20watches/new%20l.jpg", description: "Two statement wristwatches displayed in presentation boxes.", categories: ["Luxury"] },
+  { name: "Luxury Watch 04", price: null, image: "dress%26co%20img/luxury%20watches/new%20l12.jpg", description: "Silver-tone rectangular watch with a black leather strap.", categories: ["Luxury"] },
+  { name: "Luxury Watch 05", price: null, image: "dress%26co%20img/luxury%20watches/new%20lll.jpg", description: "Silver-tone skeleton-dial watch with a black leather strap.", categories: ["Luxury"] },
+  { name: "Luxury Watch 06", price: null, image: "dress%26co%20img/luxury%20watches/new.jpg", description: "Gold and silver-tone watches displayed in presentation boxes.", categories: ["Luxury"] },
+  { name: "Couples Set 01", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497625_121.jpg", description: "Matching black-dial watches with dark linked bracelets.", categories: ["Couples"] },
+  { name: "Couples Set 02", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497629_121.jpg", description: "Matching rose-tone watches with warm-colored dials.", categories: ["Couples"] },
+  { name: "Couples Set 03", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497631_121.jpg", description: "Matching gold-tone watches with light dials.", categories: ["Couples"] },
+  { name: "Twins Set 01", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497628_121.jpg", description: "Matching two-tone watches with dark dials.", categories: ["Twins"] },
+  { name: "Twins Set 02", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497630_121.jpg", description: "Matching white watches with light dials.", categories: ["Twins"] },
+  { name: "Twins Set 03", price: null, image: "dress%26co%20img/luxury%20watches/couples%20and%20twin/6026143471015497632_121.jpg", description: "Matching gold-tone watches with dark dials.", categories: ["Twins"] },
 ];
 
 const menuButton = document.querySelector(".menu-toggle");
@@ -396,7 +404,8 @@ function renderProducts() {
   }
 
   const couplesGridClass = selectedFilter === "couples" ? " couples-twins-grid" : "";
-  collectionResults.innerHTML = `<div class="product-grid${couplesGridClass}">${visibleProducts.map(renderProductCard).join("")}</div>`;
+  const womenGridClass = selectedFilter === "women" ? " women-grid" : "";
+  collectionResults.innerHTML = `<div class="product-grid${couplesGridClass}${womenGridClass}">${visibleProducts.map(renderProductCard).join("")}</div>`;
 }
 
 if (couplesTwinsResults) {

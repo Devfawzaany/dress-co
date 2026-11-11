@@ -115,7 +115,7 @@
 .showcase-grid img{height:auto;aspect-ratio:auto;object-fit:contain;object-position:center}
 .category-card[data-category="Luxury Collection"] img{object-fit:contain;object-position:center;background:var(--soft)}
 .shop-page .couples-twins-section{padding-top:58px;padding-bottom:58px}
-.shop-page .couples-twins-grid,.home-page .couples-twins-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.shop-page .couples-twins-grid,.home-page .couples-twins-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 @media(max-width:900px){.shop-page .couples-twins-grid,.home-page .couples-twins-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.shop-page .couples-twins-section{padding-top:42px;padding-bottom:42px;padding-left:23px;padding-right:23px}.shop-page .couples-twins-grid,.home-page .couples-twins-grid{grid-template-columns:1fr}.shop-page .couples-twins-grid .product-card:last-child,.home-page .couples-twins-grid .product-card:last-child{grid-column:auto;width:auto}}
 /* Full text wordmark in the shared site header. */
@@ -128,6 +128,8 @@
 .header-cta{margin-left:clamp(18px,3vw,42px);white-space:nowrap}
 @media(max-width:900px){.site-header{gap:clamp(15px,2.6vw,24px)}.primary-nav{gap:clamp(11px,1.7vw,16px)}.primary-nav a{font-size:10px}.header-cta{margin-left:12px;padding:10px 12px}}
 @media(max-width:680px){.site-header{justify-content:flex-start;gap:0}.brand{font-size:clamp(17px,5vw,21px)}.header-cta{display:none}.menu-toggle{margin-left:auto;order:0}.primary-nav{margin-left:0}}
+@media(min-width:901px){.shop-page .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:381px){.shop-page .product-grid.women-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px;margin-inline:auto}}
 /* Keep the existing logo alongside the full text wordmark. */
 .brand{gap:10px}
 .brand img{display:block;width:46px;height:46px;flex:none;object-fit:cover;border-radius:50%}
@@ -172,6 +174,7 @@
 .category-overlay>.circle-arrow{position:absolute;right:0;bottom:0;width:35px;height:35px;padding:8px;border:1px solid rgba(255,255,255,.65);border-radius:50%;color:#fff}
 .social-links>a>.ui-icon{width:16px;height:16px;color:var(--orange)}
 .contact-copy strong>.ui-icon{width:14px;height:14px;color:var(--orange)}
+.contact-details>a:not(.contact-social-link) strong>.ui-icon{width:14px;height:14px;color:var(--ink)}
 .menu-toggle>.ui-icon{width:22px;height:22px}
 .search-clear>.ui-icon{width:16px;height:16px}
 .button:hover>.ui-icon,.header-cta:hover>.ui-icon,.text-link:hover>.ui-icon,.underlined-link:hover>.ui-icon{transform:translateX(2px)}
